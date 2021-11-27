@@ -1,0 +1,60 @@
+#kubectl create ns myvol
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app-data
+spec:
+  capacity:
+    storage: 2Gi  
+  accessModes:
+    - ReadWriteOnce
+  #persistentVolumeReclaimPolicy: Recycle
+  hostPath:
+    path: /tmp
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: 146pv  
+  #namespace my vol 
+spec:  
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 70Mi
+
+--- 
+
+
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: my-request-for-storage
+# spec:
+#   accessModes:
+#   - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 5Gi
+#   storageClassName: fast-storage
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: 146pod
+spec:
+  containers:
+    - name: pvcpod
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: 146pv
+
+

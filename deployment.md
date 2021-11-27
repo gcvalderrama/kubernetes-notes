@@ -1,34 +1,42 @@
 kubectl create deployment --image=nginx newnginx
-kubectl get all 
-
 kubectl create deployment --dry-run  --image=nginx  -o yaml demo 
 
-kubectl scale deployment demo --replicas=3
+# scale 
+kubectl scale deployment newnginx --replicas=3
 
-
+# show labels 
 kubectl get deployments --show-labels 
 
-kubectl label deployments.apps demo state=demo 
+# add label
+kubectl label deployments.apps newnginx state=demo 
 
 kubectl get deployments.apps --selector state=demo 
 
 kubectl get all --selector app=demo 
 
+# Rolling updates 
+strategy:
+    rollingUpdate: 
+        maxSurge: 2
+        maxUnavailable: 1 # 25%
+    type: RollingUpdate
+
 kubectl explain deployment.spec.strategy 
+kubectl explain deployment.spec.strategy.rollingUpdate 
 
-kubectl rollout history deployment 
-kubectl edit deployments.app nginx 
 
-kubectl rollout history deployment deploymentname
+kubectl rollout -? 
+
+kubectl rollout history deployment rolling-nginx 
+
+kubectl edit deployments.app rolling-nginx 
+kubectl rollout history deployment rolling-nginx 
+kubectl describe deployment rolling-nginx 
 
 kubectl expose deployment nginx --port=80 --name=myservice 
-
 kubectl get daemonset -n kube-system
-
 kubectl exec -it demo -- /bin/bash 
-
 kubectl get pv demo-pv
-
 kubectl explain pv.spec
 kubectl explain pv.spec.storageClassName
 

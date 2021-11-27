@@ -8,7 +8,7 @@ kubectl config get-contexts
 kubectl config view 
 
 kubectl auth can-i --list --as johndoe 
-
+cloud foundation dajsdakjl
 
 # create namespace 
 kubectl create ns mynamespace 

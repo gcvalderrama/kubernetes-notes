@@ -1,0 +1,15 @@
+# kubectl explain job.spec.template.metadata
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ext147
+spec:
+  template:
+    metadata:
+      name: xxazz-pod
+    spec:
+      containers:
+      - name: pi
+        image: alpine
+        command: ['sleep', '3600']
+      restartPolicy: Never 
