@@ -1,0 +1,14 @@
+#https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  nodeSelector:
+    disktype: ssdcustom
